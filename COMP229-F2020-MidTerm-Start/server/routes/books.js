@@ -14,9 +14,11 @@ router.get('/', (req, res, next) => {
       return console.error(err);
     }
     else {
+
       res.render('books/index', {
         title: 'Books',
-        books: books
+        books: books,
+        displayName: req.user ? req.user.displayName : ''
       });
     }
   });
@@ -30,7 +32,19 @@ router.get('/add', (req, res, next) => {
      * ADD CODE HERE *
      *****************/
 
-    res.render('books/details', {title: 'Add Book'})
+    book.find( (err, books) => {
+      if (err) {
+        return console.error(err);
+      }
+      else {
+  
+        res.render('books/details', {
+          title: 'Add Book',
+          books: books,
+          displayName: req.user ? req.user.displayName : ''
+        });
+      }
+    });
 
 });
 
@@ -42,9 +56,10 @@ router.post('/add', (req, res, next) => {
      *****************/
 
     let newBook = book({
-      "price": req.body.price,
-      "author": req.body.author,
-      "genre": req.body.genre
+      "Title": req.body.title,
+      "Price": req.body.price,
+      "Author": req.body.author,
+      "Genre": req.body.genre
     });
 
     book.create(newBook, (err, book) =>{
@@ -63,7 +78,7 @@ router.post('/add', (req, res, next) => {
 });
 
 // GET the Book Details page in order to edit an existing Book
-router.get('/:id', (req, res, next) => {
+router.get('/edit/:id', (req, res, next) => {
 
     /*****************
      * ADD CODE HERE *
@@ -80,14 +95,16 @@ router.get('/:id', (req, res, next) => {
         else
         {
             //show the edit view
-            res.render('books/details', {title: 'Edit Book', book: bookToEdit})
+            res.render('books/details', {title: 'Edit Book', 
+            book: bookToEdit, 
+            displayName: req.user ? req.user.displayName : ''})
         }
     });
 
 });
 
 // POST - process the information passed from the details form and update the document
-router.post('/:id', (req, res, next) => {
+router.post('/edit/:id', (req, res, next) => {
 
     /*****************
      * ADD CODE HERE *
@@ -96,9 +113,10 @@ router.post('/:id', (req, res, next) => {
     let id = req.params.id
 
     let updatedBook = book({
-      "price": req.body.price,
-      "author": req.body.author,
-      "genre": req.body.genre
+      "Title": req.body.title,
+      "Price": req.body.price,
+      "Author": req.body.author,
+      "Genre": req.body.genre
     });
 
     book.updateOne({_id: id}, updatedBook, (err) => {
