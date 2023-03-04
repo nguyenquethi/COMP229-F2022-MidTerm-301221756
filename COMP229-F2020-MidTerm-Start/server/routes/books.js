@@ -14,6 +14,8 @@ router.get('/', (req, res, next) => {
       return console.error(err);
     }
     else {
+      
+      //console.log(books index);
 
       res.render('books/index', {
         title: 'Books',
