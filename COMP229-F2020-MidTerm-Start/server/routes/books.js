@@ -96,7 +96,7 @@ router.get('/edit/:id', (req, res, next) => {
         {
             //show the edit view
             res.render('books/details', {title: 'Edit Book', 
-            book: bookToEdit, 
+            books: bookToEdit, 
             displayName: req.user ? req.user.displayName : ''})
         }
     });
@@ -113,6 +113,7 @@ router.post('/edit/:id', (req, res, next) => {
     let id = req.params.id
 
     let updatedBook = book({
+      "_id": id,
       "Title": req.body.title,
       "Price": req.body.price,
       "Author": req.body.author,
