@@ -1,5 +1,10 @@
 /* custom JS goes here */
 
+// MidTerm 
+// Author name: Thi Nguyen
+// Student ID: 301221756
+// COMP229-F2023-MidTerm
+
 /* pagination code from http://www.bootply.com/lxa0FF9yhw */
 $.fn.pageMe = function(opts){
     var $this = this,
